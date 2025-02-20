@@ -13,3 +13,17 @@ Note the README for the Pi image
 https://dl.rockylinux.org/pub/sig/8/altarch/aarch64/images/README.txt  
 
 
+
+sudo rootfs-expand
+sudo adduser ghastman  
+sudo passwd ghastman  
+sudo usermod -aG wheel ghastman  
+
+scp -rp ~/.ssh raspberrypi-01:~/
+scp -rp ~/.ssh raspberrypi-02:~/
+scp -rp ~/.ssh raspberrypi-03:~/
+scp -rp ~/.ssh raspberrypi-04:~/
+scp -rp ~/.ssh raspberrypi-05:~/
+scp -rp ~/.ssh raspberrypi-06:~/
+scp -rp ~/.ssh raspberrypi-07:~/
+scp -rp ~/.ssh raspberrypi-08:~/
