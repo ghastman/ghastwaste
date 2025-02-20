@@ -1,0 +1,14 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.1.105   dev-control
+192.168.1.46    jetsonnano
+192.168.1.48    raspberrypi-01
+192.168.1.49    raspberrypi-02    
+192.168.1.50    raspberrypi-03    
+192.168.1.51    raspberrypi-04
+192.168.1.52    raspberrypi-05
+192.168.1.53    raspberrypi-06
+192.168.1.54    raspberrypi-07
+192.168.1.55    raspberrypi-08
+
