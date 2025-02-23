@@ -1,0 +1,56 @@
+- name: Setup passwordless sudo
+  become: true 
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Remove the default user 'rocky'
+  when: ansible_facts['os_family']|lower == 'redhat'
+  become: true 
+  ansible.builtin.user:
+    name: rocky
+    state: absent
+    remove: yes  
+
+- name: RedHat execution block
+  when: ansible_os_family == "RedHat"
+  become: true 
+  block:
+    - name: Check and install updates
+      ansible.builtin.shell:
+        cmd: "dnf -y update"
+      register: dnf_results
+
+    - name: Print Results
+      debug:
+        msg: "{{ dnf_results.stdout_lines }}"
+
+    - name: install yum-utils if needed
+      ansible.builtin.dnf:
+        name: yum-utils
+        state: present
+
+    - name: check if reboot is required
+      ansible.builtin.shell:
+        cmd: "needs-restarting -r -s"
+      register: needs_restarting
+      changed_when: needs_restarting.rc == 1
+      #failed_when: needs_restarting.rc == 0
+
+
+- name: Debian execution block
+  when: ansible_facts['os_family']|lower == 'debian'
+  become: true 
+  block:
+    - name: Update all Debian/Ubuntu packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest    
+        
+    - name: Check if a reboot is needed on all Debian servers
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required
+ 

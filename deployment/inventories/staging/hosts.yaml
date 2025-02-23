@@ -3,6 +3,8 @@ ungrouped:
     localhost:
       ansible_connection: local
     dev-control:
+pool:
+  hosts:
     jetsonnano:
     raspberrypi-01:
     raspberrypi-02:   
@@ -12,3 +14,4 @@ ungrouped:
     raspberrypi-06:
     raspberrypi-07:
     raspberrypi-08:
+        
