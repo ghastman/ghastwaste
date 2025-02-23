@@ -28,6 +28,6 @@ scp -rp ~/.ssh raspberrypi-07:~/
 scp -rp ~/.ssh raspberrypi-08:~/  
 
 ## Ansible  
-sh ansible_packages.sh 
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml
-ansible-playbook -i inventories/staging/hosts.yaml --limit-localhost common.yaml
+sh ansible_packages.sh  
+ansible-playbook -i inventories/staging/hosts.yaml common.yaml  
+ansible-playbook -i inventories/staging/hosts.yaml --limit-localhost common.yaml  
