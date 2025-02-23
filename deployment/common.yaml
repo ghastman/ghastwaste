@@ -1,0 +1,4 @@
+# file: common.yaml
+- hosts: all
+  roles:
+    - common

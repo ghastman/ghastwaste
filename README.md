@@ -12,18 +12,22 @@ https://rockylinux.org/download
 Note the README for the Pi image  
 https://dl.rockylinux.org/pub/sig/8/altarch/aarch64/images/README.txt  
 
-
-
-sudo rootfs-expand
-sudo adduser ghastman  
+## On nodes  
+sudo rootfs-expand  
+sudo adduser ghastman   
 sudo passwd ghastman  
-sudo usermod -aG wheel ghastman  
+sudo usermod -aG wheel ghastman   
 
-scp -rp ~/.ssh raspberrypi-01:~/
-scp -rp ~/.ssh raspberrypi-02:~/
-scp -rp ~/.ssh raspberrypi-03:~/
-scp -rp ~/.ssh raspberrypi-04:~/
-scp -rp ~/.ssh raspberrypi-05:~/
-scp -rp ~/.ssh raspberrypi-06:~/
-scp -rp ~/.ssh raspberrypi-07:~/
-scp -rp ~/.ssh raspberrypi-08:~/
+scp -rp ~/.ssh raspberrypi-01:~/  
+scp -rp ~/.ssh raspberrypi-02:~/  
+scp -rp ~/.ssh raspberrypi-03:~/  
+scp -rp ~/.ssh raspberrypi-04:~/  
+scp -rp ~/.ssh raspberrypi-05:~/  
+scp -rp ~/.ssh raspberrypi-06:~/  
+scp -rp ~/.ssh raspberrypi-07:~/  
+scp -rp ~/.ssh raspberrypi-08:~/  
+
+## Ansible  
+sh ansible_packages.sh 
+ansible-playbook -i inventories/staging/hosts.yaml common.yaml
+ansible-playbook -i inventories/staging/hosts.yaml --limit-localhost common.yaml

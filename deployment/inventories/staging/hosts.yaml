@@ -1,5 +1,7 @@
 ungrouped:
   hosts:
+    localhost:
+      ansible_connection: local
     dev-control:
     jetsonnano:
     raspberrypi-01:
