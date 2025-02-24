@@ -16,3 +16,11 @@
       tags: update   
   tags: 
   - update
+
+- name: Dynamic re-use of cockpit tasks
+  include_tasks: 
+    file: cockpit.yaml
+    apply:
+      tags: cockpit   
+  tags: 
+  - cockpit  
