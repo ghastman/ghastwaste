@@ -10,6 +10,9 @@
   - facts_cpu  
 
 - name: Dynamic re-use of update tasks
-  include_tasks: update.yaml
+  include_tasks: 
+    file: update.yaml
+    apply:
+      tags: update   
   tags: 
   - update
