@@ -1,0 +1,13 @@
+- name: Get OS Vendor
+  debug:
+      msg: "Vendor: {{ hostvars[inventory_hostname].ansible_distribution }}"
+  tags: facts_os
+- name: Get OS Version
+  debug:
+      msg: "Version: {{ hostvars[inventory_hostname].ansible_distribution_version }}"
+  tags: facts_os
+
+- name: Get CPU Core Count
+  debug:
+      msg: "Kernel: {{ ansible_facts['kernel'] }}  CPU: {{ ansible_facts['processor_vcpus'] }} {{ ansible_facts['machine'] }} cores"
+  tags: facts_cpu
