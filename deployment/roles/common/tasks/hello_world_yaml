@@ -1,0 +1,4 @@
+- name: Test Echo
+  command: /bin/echo hello
+  tags: hello_world
+
