@@ -1,0 +1,15 @@
+- name: Dynamic re-use of hello_world tasks
+  include_tasks: hello_world.yaml
+  tags: 
+  - hello_world
+
+- name: Dynamic re-use of facts tasks
+  include_tasks: facts.yaml
+  tags: 
+  - facts_os
+  - facts_cpu  
+
+- name: Dynamic re-use of update tasks
+  include_tasks: update.yaml
+  tags: 
+  - update
