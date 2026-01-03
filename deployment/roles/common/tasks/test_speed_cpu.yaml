@@ -1,0 +1,18 @@
+- name: Ensure bc and time are installed
+  package:
+    name:
+      - bc
+      - time
+    state: present
+  become: yes
+
+- name: Run Pi calculation with timing using the 'time' command
+  ansible.builtin.shell:
+    cmd: "time -p echo \"scale=100; 4*a(1)\" | bc -l"
+  register: pi_result
+  changed_when: false
+
+- name: Display the result and timing
+  ansible.builtin.debug:
+    msg: |
+      Time: {{ pi_result.stderr }}

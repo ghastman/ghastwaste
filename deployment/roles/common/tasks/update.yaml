@@ -19,6 +19,10 @@
   when: ansible_os_family == "RedHat"
   become: true 
   block:
+    - name: Clean dnf package cache
+      ansible.builtin.shell:
+        cmd: "dnf clean packages"
+  
     - name: Check and install updates
       ansible.builtin.shell:
         cmd: "dnf -y update"
@@ -37,9 +41,13 @@
       ansible.builtin.shell:
         cmd: "needs-restarting -r -s"
       register: needs_restarting
-      changed_when: needs_restarting.rc == 1
-      #failed_when: needs_restarting.rc == 0
+      failed_when: needs_restarting.rc not in [0, 1]
+      changed_when: false
 
+    - name: Set reboot required fact
+      set_fact:
+        reboot_required: true
+      when: needs_restarting.rc == 1      
 
 - name: Debian execution block
   when: ansible_facts['os_family']|lower == 'debian'
@@ -53,4 +61,19 @@
     - name: Check if a reboot is needed on all Debian servers
       register: reboot_required_file
       stat: path=/var/run/reboot-required
+
+    - name: Set reboot required fact for Debian/Ubuntu
+      set_fact:
+        reboot_required: true
+      when: reboot_required_file.stat.exists
+
+- name: Reboot the server if required
+  when: reboot_required is defined and reboot_required
+  become: true 
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible for applying updates"
+    pre_reboot_delay: 10
+    post_reboot_delay: 30
+    reboot_timeout: 600
+
  

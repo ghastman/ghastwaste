@@ -1,14 +1,17 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-192.168.1.105   dev-control
-192.168.1.46    jetsonnano
-192.168.1.48    raspberrypi-01
-192.168.1.49    raspberrypi-02    
-192.168.1.50    raspberrypi-03    
-192.168.1.51    raspberrypi-04
-192.168.1.52    raspberrypi-05
-192.168.1.53    raspberrypi-06
-192.168.1.54    raspberrypi-07
-192.168.1.55    raspberrypi-08
+192.168.1.105   a10-9700e
+192.168.1.46    jetson-nano
+192.168.1.48    raspberry-pi4b-01
+192.168.1.49    raspberry-pi4b-02    
+192.168.1.50    raspberry-pi4b-03    
+192.168.1.51    raspberry-pi4b-04
+192.168.1.52    raspberry-pi4b-05
+192.168.1.53    raspberry-pi4b-06
+192.168.1.54    raspberry-pi4b-07
+192.168.1.55    raspberry-pi4b-08
+192.168.1.122	phenom-925	
+192.168.1.124	phenom-965	
+192.168.1.123	ryzen-5-2600
 

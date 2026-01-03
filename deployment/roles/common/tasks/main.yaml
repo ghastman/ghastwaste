@@ -8,6 +8,7 @@
   tags: 
   - facts_os
   - facts_cpu  
+  - facts_memory
 
 - name: Dynamic re-use of update tasks
   include_tasks: 
@@ -17,10 +18,26 @@
   tags: 
   - update
 
-- name: Dynamic re-use of cockpit tasks
+- name: Dynamic re-use of test_speed_disk tasks
   include_tasks: 
-    file: cockpit.yaml
+    file: test_speed_disk.yaml
     apply:
-      tags: cockpit   
+      tags: test_speed_disk 
   tags: 
-  - cockpit  
+  - test_speed_disk  
+
+- name: Dynamic re-use of test_speed_internet tasks
+  include_tasks: 
+    file: test_speed_internet.yaml
+    apply:
+      tags: test_speed_internet 
+  tags: 
+  - test_speed_internet  
+
+- name: Dynamic re-use of test_speed_cpu tasks
+  include_tasks: 
+    file: test_speed_cpu.yaml
+    apply:
+      tags: test_speed_cpu 
+  tags: 
+  - test_speed_cpu   

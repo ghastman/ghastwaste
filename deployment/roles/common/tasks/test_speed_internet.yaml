@@ -1,0 +1,26 @@
+- name: Ensure curl and wget are installed
+  package:
+    name:
+      - curl
+      - wget
+    state: present
+  become: yes
+
+- name: Test download speed with curl
+  shell: |
+    curl -o /dev/null -s -w '%{speed_download}\n' https://www.google.com
+  register: curl_speed
+  changed_when: false
+
+- name: Test download speed with wget
+  shell: |
+    wget --tries=1 --timeout=10 -O /dev/null https://www.google.com 2>&1 | grep -oP '\d+\.?\d*\s*(K|M)' | tail -1
+  register: wget_speed
+  changed_when: false
+  ignore_errors: yes
+
+- name: Display internet speed results
+  debug:
+    msg: |
+      Curl download speed: {{ curl_speed.stdout }} bytes/sec
+      Wget download speed: {{ wget_speed.stdout }}

@@ -1,17 +1,30 @@
-ungrouped:
+pool:
   hosts:
     localhost:
       ansible_connection: local
-    dev-control:
-pool:
-  hosts:
-    jetsonnano:
-    raspberrypi-01:
-    raspberrypi-02:   
-    raspberrypi-03:    
-    raspberrypi-04:
-    raspberrypi-05:
-    raspberrypi-06:
-    raspberrypi-07:
-    raspberrypi-08:
-        
+    a10-9700e:  
+      ansible_host: 192.168.1.105
+    jetson-nano:
+      ansible_host: 192.168.1.46
+    raspberry-pi4b-01:
+      ansible_host: 192.168.1.48
+    raspberry-pi4b-02:   
+      ansible_host: 192.168.1.49
+    raspberry-pi4b-03:    
+      ansible_host: 192.168.1.50
+    raspberry-pi4b-04:
+      ansible_host: 192.168.1.51
+    raspberry-pi4b-05:
+      ansible_host: 192.168.1.52
+    raspberry-pi4b-06:
+      ansible_host: 192.168.1.53
+    raspberry-pi4b-07:
+      ansible_host: 192.168.1.54
+    raspberry-pi4b-08:
+      ansible_host: 192.168.1.55
+    phenom-925:
+      ansible_host: 192.168.1.122
+    phenom-965:
+      ansible_host: 192.168.1.124
+    ryzen-5-2600:
+      ansible_host: 192.168.1.123

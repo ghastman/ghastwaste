@@ -1,0 +1,24 @@
+- name: Create test file for writing
+  command: dd if=/dev/zero of=/tmp/testfile bs=1G count=1 oflag=direct
+  register: write_result
+  changed_when: false # dd doesn't change state
+
+- name: Display write speed (e.g., MB/s)
+  debug:
+    msg: "Write Speed: {{ write_result.stderr | regex_search('([0-9.]+)\\s+([KMG]?B/s)') }}"
+  when: write_result.stderr is defined
+
+- name: Read test file (for read speed)
+  command: dd if=/tmp/testfile of=/dev/null bs=1G count=1 iflag=direct
+  register: read_result
+  changed_when: false
+
+- name: Display read speed (e.g., MB/s)
+  debug:
+    msg: "Read Speed: {{ read_result.stderr | regex_search('([0-9.]+)\\s+([KMG]?B/s)') }}"
+  when: read_result.stderr is defined
+  
+- name: Clean up test file
+  file:
+    path: /tmp/testfile
+    state: absent

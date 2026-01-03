@@ -2,6 +2,7 @@
   debug:
       msg: "Vendor: {{ hostvars[inventory_hostname].ansible_distribution }}"
   tags: facts_os
+
 - name: Get OS Version
   debug:
       msg: "Version: {{ hostvars[inventory_hostname].ansible_distribution_version }}"
@@ -11,3 +12,17 @@
   debug:
       msg: "Kernel: {{ ansible_facts['kernel'] }}  CPU: {{ ansible_facts['processor_vcpus'] }} {{ ansible_facts['machine'] }} cores"
   tags: facts_cpu
+
+- name: Gather system information and display memory size
+  block:
+    - name: Display total memory in MB
+      debug:
+        msg: "Total Memory: {{ ansible_memtotal_mb }} MB"
+
+    - name: Display memory information including swap
+      debug:
+        msg: |
+          RAM Total: {{ ansible_memtotal_mb }} MB
+          RAM Free: {{ ansible_memfree_mb }} MB
+          Swap Total: {{ ansible_memory_mb.swap.total }} MB
+  tags: facts_memory          
