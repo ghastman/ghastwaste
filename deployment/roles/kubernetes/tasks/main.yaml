@@ -1,0 +1,40 @@
+- name: Dynamic re-use of bootstrap tasks
+  include_tasks: 
+    file: bootstrap.yaml
+    apply:
+      tags: bootstrap     
+  tags: 
+  - bootstrap
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
