@@ -79,6 +79,4 @@ ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_spee
 ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_speed_internet  
 ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_speed_cpu  
 ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags update  
-
-## Oneshot cleanups
-ansible-playbook -i inventories/staging/hosts.yaml remove_cockpit.yaml  
+ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags shutdown  

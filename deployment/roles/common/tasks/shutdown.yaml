@@ -1,0 +1,5 @@
+- name: Gracefully shut down Linux nodes
+  become: true
+  community.general.shutdown:
+    delay: 0
+    msg: "Shutdown managed by Ansible"

@@ -41,3 +41,12 @@
       tags: test_speed_cpu 
   tags: 
   - test_speed_cpu   
+
+- name: Dynamic re-use of shutdown tasks
+  include_tasks: 
+    file: shutdown.yaml
+    apply:
+      tags: shutdown 
+  tags: 
+  - shutdown
+  when: inventory_hostname != 'localhost'     
