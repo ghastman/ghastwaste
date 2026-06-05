@@ -2,6 +2,7 @@ pool:
   hosts:
     localhost:
       ansible_connection: local
+      ansible_host: 127.0.0.1      
     a10-9700e:  
       ansible_host: 192.168.1.105
     jetson-nano:
@@ -28,3 +29,7 @@ pool:
       ansible_host: 192.168.1.124
     ryzen-5-2600:
       ansible_host: 192.168.1.123
+control_node:
+  hosts:
+    a10-9700e:  
+      ansible_host: 192.168.1.105      

@@ -1,3 +1,14 @@
+
+
+- name: Display disk capacity
+  command: df -h /
+  register: disk_capacity
+  changed_when: false
+
+- name: Show disk capacity
+  debug:
+    msg: "{{ disk_capacity.stdout }}"
+
 - name: Create test file for writing
   command: dd if=/dev/zero of=/tmp/testfile bs=1G count=1 oflag=direct
   register: write_result

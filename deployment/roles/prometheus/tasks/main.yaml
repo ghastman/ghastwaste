@@ -1,0 +1,7 @@
+- name: Dynamic re-use of install tasks
+  include_tasks: 
+    file: install.yaml
+    apply:
+      tags: install   
+  tags: 
+  - install  

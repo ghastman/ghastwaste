@@ -1,0 +1,5 @@
+- name: Deploy Prometheus Central Server
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.prometheus
+    apply:
+      become: true            

@@ -1,18 +1,30 @@
-- name: Ensure bc and time are installed
-  package:
+- name: Ensure benchmark dependencies are installed (Debian/Ubuntu)
+  ansible.builtin.package:
     name:
-      - bc
-      - time
+      - stress-ng
+      - sysstat
     state: present
-  become: yes
+  become: true    
+  when: ansible_os_family in ["Debian", "RedHat"]
 
-- name: Run Pi calculation with timing using the 'time' command
-  ansible.builtin.shell:
-    cmd: "time -p echo \"scale=100; 4*a(1)\" | bc -l"
-  register: pi_result
+- name: Capture idle CPU utilization baseline (10 seconds)
+  ansible.builtin.command: mpstat -P ALL 1 10
+  register: mpstat_baseline
   changed_when: false
 
-- name: Display the result and timing
+- name: Run stress-ng matrix CPU benchmark for 60 seconds
+  ansible.builtin.command: stress-ng --matrix 0 --metrics-brief -t 1m
+  register: stress_ng_output
+  changed_when: false
+
+- name: Parse bogo-ops per second from output
+  ansible.builtin.set_fact:
+    # Extracts the final numeric column value from the 'matrix' results line
+    bogo_ops_sec: "{{ stress_ng_output.stderr | regex_search('matrix\\s+\\d+\\s+[\\d\\.]+\\s+[\\d\\.]+\\s+[\\d\\.]+\\s+([\\d\\.]+)', '\\1') | first }}"
+
+- name: Display benchmark results summary
   ansible.builtin.debug:
-    msg: |
-      Time: {{ pi_result.stderr }}
+    msg: 
+      - "Host: {{ inventory_hostname }}"
+      - "CPU Cores Detected: {{ ansible_processor_vcpus }}"
+      - "Matrix Benchmark Score: {{ bogo_ops_sec }} bogo-ops/sec"

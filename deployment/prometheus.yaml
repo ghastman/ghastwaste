@@ -1,8 +1,8 @@
-# file: common.yaml
+# file: prometheus.yaml
 ---
-- hosts: all
+- hosts: control_node
   roles:
-    - common
+    - prometheus
   vars_prompt:
     - name: "ansible_become_pass"
       prompt: "sudo password"

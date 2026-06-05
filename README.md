@@ -69,14 +69,21 @@ git clone https://github.com/ghastman/ghastwaste.git ~/Workspace/ghastman/ghastw
 
 ## Ansible  
 sudo dnf install ansible-collection-ansible-posix.noarch ansible-collection-community-general.noarch ansible-test.noarch ansible-core.noarch  
+ansible-galaxy collection install prometheus.prometheus
 
 ### From the deployment dir...  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags hello_world  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags facts_os  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags facts_cpu  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags facts_memory  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_speed_disk  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_speed_internet  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags test_speed_cpu  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags update  
-ansible-playbook -i inventories/staging/hosts.yaml common.yaml  --tags shutdown  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags hello_world  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags facts_os  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags facts_cpu  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags facts_memory  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags test_speed_disk  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags test_speed_internet  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags test_speed_cpu  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags update  
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags shutdown  
+
+### For Common Package install
+ansible-playbook -i inventories/hosts.yaml common.yaml  --tags install
+
+### For Prometheus Server (monitoring database)
+ansible-playbook -i inventories/hosts.yaml prometheus.yaml  --tags install  
