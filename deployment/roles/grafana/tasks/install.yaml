@@ -1,16 +1,20 @@
-- name: Open Prometheus server port in firewalld (RedHat family)
+- name: Deploy Grafana Server
+  ansible.builtin.include_role:
+    name: grafana.grafana.grafana
+    apply:
+      become: true  
+
+- name: Open Grafana port in firewalld (RedHat family)
   ansible.builtin.firewalld:
-    port: 9090/tcp
+    port: 3000/tcp
     permanent: true
     state: enabled
     immediate: true
   become: true      
   when: ansible_facts.os_family == 'RedHat'
 
-
-
-- name: Ensure ufw allows Prometheus port (Debian family)
-  ansible.builtin.command: ufw allow 9090/tcp
+- name: Ensure ufw allows Grafana port (Debian family)
+  ansible.builtin.command: ufw allow 3000/tcp
   when: ansible_facts.os_family == 'Debian'
   become: true
   register: ufw_allow
@@ -18,12 +22,6 @@
 
 - name: Reload ufw if we changed rules (Debian family)
   ansible.builtin.command: ufw reload
-  become: true  
   when: ansible_facts.os_family == 'Debian' and (ufw_allow is defined and ufw_allow.rc == 0)
 
-
-- name: Deploy Prometheus Central Server
-  ansible.builtin.include_role:
-    name: prometheus.prometheus.prometheus
-    apply:
-      become: true            
+     

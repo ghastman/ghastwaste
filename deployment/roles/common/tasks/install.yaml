@@ -1,5 +1,66 @@
+- name: Install lm_sensors for hardware monitoring
+  ansible.builtin.include_role:
+    name: aisbergg.lm_sensors
+    apply:
+      become: true 
+
+
+- name: Deploy hosts file
+  ansible.builtin.copy:
+    src: files/hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Remove port 9090 from firewalld (RedHat family)
+  ansible.builtin.firewalld:
+    port: 9090/tcp
+    permanent: true
+    state: disabled
+    immediate: true
+  become: true
+  when: ansible_facts.os_family == 'RedHat'
+
+- name: Remove port 9090 from ufw (Debian family)
+  ansible.builtin.command: ufw delete allow 9090/tcp
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  register: ufw_delete_9090
+  changed_when: ufw_delete_9090.rc == 0
+
+
+
+
+- name: Open Node Exporter port in firewalld (RedHat family)
+  ansible.builtin.firewalld:
+    port: 9100/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+  become: true      
+  when: ansible_facts.os_family == 'RedHat'
+
+
+
+- name: Ensure ufw allows Node Exporter port (Debian family)
+  ansible.builtin.command: ufw allow 9100/tcp
+  when: ansible_facts.os_family == 'Debian'
+  become: true
+  register: ufw_allow
+  changed_when: ufw_allow.rc == 0
+
+- name: Reload ufw if we changed rules (Debian family)
+  ansible.builtin.command: ufw reload
+  become: true  
+  when: ansible_facts.os_family == 'Debian' and (ufw_allow is defined and ufw_allow.rc == 0)
+
+
+
 - name: Install Node Exporter
   ansible.builtin.include_role:
     name: prometheus.prometheus.node_exporter
     apply:
-      become: true
+      become: true    
+

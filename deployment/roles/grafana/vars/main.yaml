@@ -1,0 +1,16 @@
+# Automates the Prometheus data source connection inside Grafana
+grafana_datasources:
+  - name: "Prometheus"
+    type: "prometheus"
+    access: "proxy"
+    url: "http://{{ groups['control_node'][0] }}:9090"
+    isDefault: true
+    jsonData:
+      httpMethod: "POST"
+      manageAlerts: true
+grafana_ini:
+  security:
+    admin_user: admin
+    admin_password: "{{ ansible_become_pass }}"      
+  server:
+    http_addr: "0.0.0.0"

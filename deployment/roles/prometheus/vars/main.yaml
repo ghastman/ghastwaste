@@ -1,13 +1,13 @@
 # Ensure the storage directory matches standard RHEL/Rocky structures
 prometheus_db_dir: "/var/lib/prometheus"
 prometheus_config_dir: "/etc/prometheus"
+prometheus_storage_retention: "15d"
 
 # Configure scrape jobs dynamically using your inventory groups
 prometheus_targets:
   node:
     - targets: "{{ groups['pool']
                    | difference(['localhost'])
-                   | map('extract', hostvars, ['ansible_host'])
                    | map('regex_replace', '$', ':9100')
                    | list }}"
       labels:

@@ -12,15 +12,19 @@
   register: mpstat_baseline
   changed_when: false
 
-- name: Run stress-ng matrix CPU benchmark for 60 seconds
-  ansible.builtin.command: stress-ng --matrix 0 --metrics-brief -t 1m
+- name: Run stress-ng matrix CPU benchmark for 10 seconds
+  ansible.builtin.command: stress-ng --matrix 0 --metrics-brief -t 10s
   register: stress_ng_output
   changed_when: false
 
 - name: Parse bogo-ops per second from output
   ansible.builtin.set_fact:
     # Extracts the final numeric column value from the 'matrix' results line
-    bogo_ops_sec: "{{ stress_ng_output.stderr | regex_search('matrix\\s+\\d+\\s+[\\d\\.]+\\s+[\\d\\.]+\\s+[\\d\\.]+\\s+([\\d\\.]+)', '\\1') | first }}"
+    bogo_ops_sec: >-
+      {% set text = (stress_ng_output.stdout | default('')) + '\n' + (stress_ng_output.stderr | default('')) %}
+      {% set matrix_line = (text | split('\n') | select('search','matrix\\s+\\d') | list) | first | default('') %}
+      {% set nums = matrix_line | regex_findall('([0-9]+(?:\\.[0-9]+)?)') | default([]) %}
+      {{ nums[-1] if nums | length >= 1 else '0' }}
 
 - name: Display benchmark results summary
   ansible.builtin.debug:

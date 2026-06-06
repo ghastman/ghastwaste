@@ -1,0 +1,9 @@
+# file: prometheus.yaml
+---
+- hosts: control_node
+  roles:
+    - grafana
+  vars_prompt:
+    - name: "ansible_become_pass"
+      prompt: "sudo password"
+      private: yes

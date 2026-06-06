@@ -68,8 +68,11 @@ mkdir ~/Workspace
 git clone https://github.com/ghastman/ghastwaste.git ~/Workspace/ghastman/ghastwaste  
 
 ## Ansible  
-sudo dnf install ansible-collection-ansible-posix.noarch ansible-collection-community-general.noarch ansible-test.noarch ansible-core.noarch  
+sudo dnf install ansible-collection-ansible-posix.noarch ansible-collection-community-general.noarch 
+sudo dnf install ansible-test.noarch ansible-core.noarch  
 ansible-galaxy collection install prometheus.prometheus
+ansible-galaxy collection install grafana.grafana
+ansible-galaxy role install aisbergg.lm_sensors
 
 ### From the deployment dir...  
 ansible-playbook -i inventories/hosts.yaml common.yaml  --tags hello_world  
@@ -85,5 +88,11 @@ ansible-playbook -i inventories/hosts.yaml common.yaml  --tags shutdown
 ### For Common Package install
 ansible-playbook -i inventories/hosts.yaml common.yaml  --tags install
 
-### For Prometheus Server (monitoring database)
+### For Prometheus Server
 ansible-playbook -i inventories/hosts.yaml prometheus.yaml  --tags install  
+
+### For Grafana Server
+ansible-playbook -i inventories/hosts.yaml grafana.yaml  --tags install 
+
+### Stress Testing
+ansible-playbook -i inventories/hosts.yaml common.yaml  --limit=a10-9700e --tags test_speed_cpu  
